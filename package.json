@@ -1,0 +1,111 @@
+{
+  "name": "vscode-har-capture",
+  "displayName": "HAR Capture",
+  "description": "Capture HTTP/HTTPS requests, SSE, and WebSocket traffic from VSCode extensions and save as HAR files",
+  "version": "0.1.0",
+  "publisher": "har-capture",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other",
+    "Debuggers"
+  ],
+  "keywords": [
+    "har",
+    "http",
+    "https",
+    "network",
+    "capture",
+    "sse",
+    "websocket",
+    "traffic",
+    "debug"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "harCapture.start",
+        "title": "HAR Capture: Start Capturing"
+      },
+      {
+        "command": "harCapture.stop",
+        "title": "HAR Capture: Stop Capturing"
+      },
+      {
+        "command": "harCapture.save",
+        "title": "HAR Capture: Save HAR File"
+      },
+      {
+        "command": "harCapture.clear",
+        "title": "HAR Capture: Clear Captured Entries"
+      },
+      {
+        "command": "harCapture.toggle",
+        "title": "HAR Capture: Toggle Capture"
+      },
+      {
+        "command": "harCapture.showDetail",
+        "title": "HAR Capture: Show Entry Detail"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "harCapture",
+          "title": "HAR Capture",
+          "icon": "$(globe)"
+        }
+      ]
+    },
+    "views": {
+      "harCapture": [
+        {
+          "id": "harCaptureEntries",
+          "name": "Captured Requests"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "harCapture.start",
+          "when": "view == harCaptureEntries",
+          "group": "navigation"
+        },
+        {
+          "command": "harCapture.stop",
+          "when": "view == harCaptureEntries",
+          "group": "navigation"
+        },
+        {
+          "command": "harCapture.save",
+          "when": "view == harCaptureEntries",
+          "group": "navigation"
+        },
+        {
+          "command": "harCapture.clear",
+          "when": "view == harCaptureEntries",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --sourcemap",
+    "watch": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --sourcemap --watch",
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.80.0",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.0.0"
+  }
+}
